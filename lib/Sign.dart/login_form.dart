@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation/api_service.dart';
+import 'package:graduation/manger/login_cubit.dart';
+import 'package:graduation/repo/repoImpl.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -12,7 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
-   
+    var C=context.read<LoginCubit>();
     return Column(
       children: [
         buildInPutForm('Email',false),

@@ -18,7 +18,8 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return BlocProvider(create: (context)=>LoginCubit(loginRepo: LoginRepoImpl(ApiService(Dio()))),
+     child: Scaffold(
       body: Padding(
         padding:const EdgeInsets.all(5),
         child: SingleChildScrollView(
@@ -94,6 +95,8 @@ class LogInScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+     );
+    
   }
 }
