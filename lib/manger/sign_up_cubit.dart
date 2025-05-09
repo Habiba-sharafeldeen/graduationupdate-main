@@ -19,6 +19,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   final addressController = TextEditingController();
 
   void signUpUser() async {
+
     emit(SignUpLoading());
     Either<Failure, LoginModel> result = await repo.registerUser(
       name: nameController.text,

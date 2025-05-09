@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String buttonText;
-  const PrimaryButton({super.key, required this.buttonText});
+  const PrimaryButton({super.key, required this.buttonText, void Function()? onPressed});
   @override
   Widget build(BuildContext context) {
     return Container(

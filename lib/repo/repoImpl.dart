@@ -23,7 +23,7 @@ class LoginRepoImpl implements LoginRepo{
   @override
   Future<Either<Failure, LoginModel>> LoginUser({required email, required password})async{
     try{
-      var data= await apiService.post(endpoint: 'api/Account/Login', data: {
+      var data= await apiService.postData(endpoint: 'api/Account/Login', data: {
       'email': email,
       'password': password
     });
