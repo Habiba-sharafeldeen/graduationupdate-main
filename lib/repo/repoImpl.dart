@@ -7,6 +7,17 @@ import 'package:graduation/repo/loginrepo.dart';
 
 class LoginRepoImpl implements LoginRepo{
   final ApiService apiService;
+  
+  @override
+  Future<Either<Failure, LoginModel>> registerUser({
+    required String name, 
+    required String email, 
+    required String password, 
+    required String phone, 
+    required String address}) {
+    
+    throw UnimplementedError();
+  }
 
   LoginRepoImpl(this.apiService);
   @override
@@ -27,5 +38,5 @@ class LoginRepoImpl implements LoginRepo{
     }
     
   }
-
+  
 }

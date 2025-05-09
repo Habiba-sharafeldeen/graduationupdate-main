@@ -1,9 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation/Sign.dart/login.dart';
+import 'package:graduation/Sign.dart/login_form.dart';
 import 'package:graduation/Sign.dart/login_option.dart';
 import 'package:graduation/Sign.dart/primary_button.dart';
 import 'package:graduation/Sign.dart/signup_form.dart';
+import 'package:graduation/api_service.dart';
 import 'package:graduation/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:graduation/manger/sign_up_cubit.dart';
+import 'package:graduation/repo/repoImpl.dart';
 
 
 class SignUpScreen extends StatelessWidget {
@@ -11,7 +17,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      create: (context) => SignUpCubit(repo: LoginRepoImpl(ApiService(Dio()))),
+      child: Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +85,8 @@ class SignUpScreen extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
+   
   }
 }
