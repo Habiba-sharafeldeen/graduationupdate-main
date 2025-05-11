@@ -17,7 +17,7 @@ Future<void>LoginUser()async{
   SharedPreferences pref= await SharedPreferences.getInstance();
   isLoading=true;
   emit(LoginLoading());
-  var result = await loginRepo.LoginUser(email: emailController, password: passwordController);
+  var result = await loginRepo.LoginUser(email: emailController.text, password: passwordController.text);
   result.fold((failure){
     isLoading=false;
     emit(LoginError(error: failure.errMessage));
