@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    loadUserData(); // استدعاء الدالة عند بداية الصفحة
+    loadUserData();
   }
 
   Future<void> loadUserData() async {
@@ -29,8 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
         userData = {
           'name': profile['userName'],
           'email': profile['email'],
-          'phone': '01288384', // قيمة افتراضية مؤقتًا
-          'city': 'Tanta',     // قيمة افتراضية مؤقتًا
+          'phone': '01288384',
+          'city': 'Tanta',     
         };
       });
     }
@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.remove('token');
 
-          // رجع لصفحة تسجيل الدخول (بدل المسار حسب مسار الصفحة عندك)
+          
           Navigator.pushReplacementNamed(context, '/login');
         },
       ),

@@ -113,7 +113,7 @@ class _LoginFormState extends State<LoginForm> {
             const SnackBar(content: Text('Login Success')));
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const MyHomePage()),
+            MaterialPageRoute(builder: (context) => const LogInScreen()),
           );
         } else if (state is LoginError) {
           ScaffoldMessenger.of(context).showSnackBar(
