@@ -7,6 +7,7 @@ import 'package:graduation/Sign.dart/login_option.dart';
 import 'package:graduation/Sign.dart/primary_button.dart';
 import 'package:graduation/Sign.dart/signup_form.dart';
 import 'package:graduation/api_service.dart';
+import 'package:graduation/features/home/presentation/pages/home_page.dart';
 import 'package:graduation/manger/sign_up_cubit.dart';
 import 'package:graduation/repo/repoImpl.dart';
 
@@ -59,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const LogInScreen()),
+                              MaterialPageRoute(builder: (context) => const MyHomePage()),
                             );
                           },
                           child: const Text(

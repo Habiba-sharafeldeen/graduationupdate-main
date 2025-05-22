@@ -2,10 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:graduation/features/Category/presentation/pages/category_screen.dart';
 import 'package:graduation/features/Item_view/presentation/pages/CartPage.dart';
 import 'package:graduation/features/store_portfollio/presentation/pages/store_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:graduation/services/userservice.dart';
 
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData(); // استدعاء الدالة عند بداية الصفحة
+  }
+
+  Future<void> loadUserData() async {
+    final profile = await fetchUserProfile();
+    if (profile != null) {
+      setState(() {
+        userData = {
+          'name': profile['userName'],
+          'email': profile['email'],
+          'phone': '01288384', // قيمة افتراضية مؤقتًا
+          'city': 'Tanta',     // قيمة افتراضية مؤقتًا
+        };
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,95 +65,107 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
        drawer: Drawer(
-      child:ListView(
-        padding:EdgeInsets.zero,
-        children:[
-          const DrawerHeader(
-       padding: EdgeInsets.all(16), 
-       decoration: BoxDecoration(
-        color:Color(0xff1F4529),
-       ),
-       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [CircleAvatar(
-          radius: 40,
-          backgroundImage: AssetImage('assets/images/Woman-Icon-Teen-Profile-Graphics-26722130-1.jpg'),
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      DrawerHeader(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Color(0xff1F4529),
         ),
-        SizedBox(width: 16,),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('User Namme',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Color(0xffE8ECD7),),),
-            SizedBox(height: 4,),
-             Text('UserName@gmail.com',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w700,color:Color(0xffE8ECD7),),),
-
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: AssetImage('assets/images/Woman-Icon-Teen-Profile-Graphics-26722130-1.jpg'),
+            ),
+            SizedBox(width: 16),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userData?['name'] ?? 'User Name',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xffE8ECD7),
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  userData?['email'] ?? 'user@example.com',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xffE8ECD7),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-        ],
-       ),
-          ),
-          ListTile(
-  leading: const Icon(Icons.call,color: Colors.blueGrey,),
-  title: const Text('01288384'),
-  onTap: (){
-    Navigator.pop(context);
-  },
-),
-ListTile(
-  leading: const Icon(Icons.home,color: Colors.blueGrey,),
-  title: const Text('Home'),
-onTap: (){
-    Navigator.pop(context);
-  },
-),
-
-
-
-ListTile(
-  leading: const Icon(Icons.location_city,color: Colors.blueGrey,),
-  title: const Text('Tanta'),
-  onTap: (){
-    Navigator.pop(context);
-  },
-),
-ListTile(
-  leading: const Icon(Icons.favorite,color: Colors.blueGrey,),
-  title: const Text('Favourite'),
-  onTap: (){
-    Navigator.pop(context);
-  },
-),
-ListTile(
-  leading: const Icon(Icons.card_travel,color: Colors.blueGrey,),
-  title: const Text('My Cart'),
- onTap: (){
-  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-return const CartPage();
-  }));
- },
-  
-),
-
-
-ListTile(
-  leading: const Icon(Icons.settings,color: Colors.blueGrey,),
-  title: const Text('Settings'),
-  onTap: (){
-    Navigator.pop(context);
-  },
-),
-
-ListTile(
-  leading: const Icon(Icons.logout,color: Colors.redAccent,),
-  title: const Text('Logout'),
-  onTap: (){
-    Navigator.pop(context);
-  },
-),
-        
-     ] ),
       ),
+      ListTile(
+        leading: Icon(Icons.call, color: Colors.blueGrey),
+        title: Text(userData?['phone'] ?? '01288384'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.home, color: Colors.blueGrey),
+        title: Text('Home'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.location_city, color: Colors.blueGrey),
+        title: Text(userData?['city'] ?? 'Tanta'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.favorite, color: Colors.blueGrey),
+        title: Text('Favourite'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.card_travel, color: Colors.blueGrey),
+        title: Text('My Cart'),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const CartPage();
+          }));
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.settings, color: Colors.blueGrey),
+        title: Text('Settings'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.logout, color: Colors.redAccent),
+        title: Text('Logout'),
+        onTap: () async {
+          // امسح التوكن من SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.remove('token');
+
+          // رجع لصفحة تسجيل الدخول (بدل المسار حسب مسار الصفحة عندك)
+          Navigator.pushReplacementNamed(context, '/login');
+        },
+      ),
+    ],
+  ),
+),
       body: Padding(
         padding: const EdgeInsets.only(right: 16, left: 16),
         child: ListView(
@@ -267,6 +308,12 @@ ListTile(
         ),
       ),
     );
+  }
+  
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
 
